@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c17215d1-2629-4edc-8381-e9f63fdf884e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/static/cart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/reset.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/adv01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/adv02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/banner01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/banner02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/banner03.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/banner04.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/banner05.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/banner06.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/down.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/fruit.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods001.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods002.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods003.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods004.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods005.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods006.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods007.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods008.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods009.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods010.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods011.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods012.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods013.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods014.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods015.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods016.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods017.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods018.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods019.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods020.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods/goods021.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/goods_detail.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/icons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/icons02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/interval_line.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/left_bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/login_banner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/logo02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/pay_icons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/register_banner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/shop_cart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/slide.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/slide02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/slide03.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/images/slide04.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/jquery-1.12.4.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/jquery-ui.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/jquery.cookie.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/register.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/slide.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/place_order.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/user_center_info.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/user_center_order.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/user_center_site.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/user/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/user/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1gUFruz1sjCkRgdUEczXoDPVrLZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates" />
+      <recent name="$PROJECT_DIR$/static" />
+      <recent name="$PROJECT_DIR$/apps/cart" />
+      <recent name="$PROJECT_DIR$/apps/goods" />
+      <recent name="$PROJECT_DIR$/apps/order" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dailyfresh" type="Python.DjangoServer" factoryName="Django server">
+      <module name="dailyfresh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c17215d1-2629-4edc-8381-e9f63fdf884e" name="Default Changelist" comment="" />
+      <created>1598161465418</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598161465418</updated>
+      <workItem from="1598161485652" duration="8690000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1598163788229">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1598163788229" />
+  </component>
+</project>
