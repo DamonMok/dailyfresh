@@ -140,3 +140,17 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
+
+# 163发送邮件配置
+# 发送Email配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# 发邮件的smtp服务器地址
+EMAIL_HOST = 'smtp.163.com'  # 可以查看你使用那个服务，就是对应的哪个服务器地址
+EMAIL_PORT = 25  # 端口号固定
+
+# 发送邮件的邮箱
+EMAIL_HOST_USER = 'damonmok1216@163.com'  # 你的邮箱名字
+# 邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = 'DOHEJSTCYXQTPUUK'  # 授权码
+# 收件人看到的发件人
+EMAIL_FROM = '天天生鲜<damonmok1216@163.com>'
