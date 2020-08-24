@@ -1,7 +1,10 @@
 from django.shortcuts import render
+from django.views.generic import View
 
 
 # 127.0.0.1:8000
-def index(request):
+class IndexView(View):
     """首页"""
-    return render(request, 'index.html')
+    def get(self, request):
+        """首页显示"""
+        return render(request, 'index.html')
