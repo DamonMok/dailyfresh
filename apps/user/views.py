@@ -55,6 +55,13 @@ class RegisterView(View):
         user.save()
 
         # 4.激活用户
+        self.email_to_activate_user(username, user, email)
+
+        # 5.返回应答
+        return redirect(reverse('goods:index'))
+
+    @staticmethod
+    def email_to_activate_user(username, user, email):
         # 发送激活邮件，包含激活链接：http://127.0.0.1:8000/user/active/{用户id}
         # 用户id需要加密(使用itsdangerous)
 
@@ -72,9 +79,6 @@ class RegisterView(View):
                        'href="http://127.0.0.1:8000/user/active/%s">http://127.0.0.1:8000/user/active/%s</a>' % \
                        (username, token, token)
         send_mail(subject, message, sender, receiver, html_message=html_message)
-
-        # 5.返回应答
-        return redirect(reverse('goods:index'))
 
 
 class ActiveView(View):
