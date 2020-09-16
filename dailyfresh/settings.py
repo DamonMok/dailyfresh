@@ -14,6 +14,12 @@ from pathlib import Path
 import os
 import sys
 
+# Celery
+CELERY_BROKER_URL = 'redis://192.168.1.21:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = 'redis://192.168.1.21:6379/0'
+CELERY_TASK_SERIALIZER = 'json'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
