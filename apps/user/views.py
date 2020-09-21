@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views.generic import View
 from django.conf import settings
 from django.core.mail import send_mail
+from django.contrib.auth import authenticate, login
 import re
 from apps.user.models import User
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -62,8 +63,6 @@ class RegisterView(View):
         return redirect(reverse('goods:index'))
 
 
-
-
 class ActiveView(View):
     """用户激活"""
     def get(self, request, token):
@@ -92,3 +91,29 @@ class LoginView(View):
     def get(self, request):
         """显示登录页面"""
         return render(request, 'login.html')
+
+    def post(self, request):
+        # 1.获取数据
+        username = request.POST.get('username')
+        password = request.POST.get('pwd')
+
+        # 2.数据校验
+        if not all([username, password]):
+            return render(request, 'login.html', {'err_msg': '数据不完整!'})
+
+        # 3.业务处理：登录校验
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            # 用户名、密码正确
+            if user.is_active:
+                # 用户已激活
+                login(request, user)
+
+                # 跳转到首页
+                return redirect(reverse('goods:index'))
+            else:
+                # 用户未激活
+                return render(request, 'login.html', {'err_msg': '用户未激活!'})
+        else:
+            # 用户名、密码错误
+            return render(request, 'login.html', {'err_msg': '用户名或密码错误!'})
