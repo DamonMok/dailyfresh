@@ -21,8 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c17215d1-2629-4edc-8381-e9f63fdf884e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/user/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dailyfresh/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dailyfresh/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +50,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -106,7 +107,11 @@
       <workItem from="1598774830773" duration="1190000" />
       <workItem from="1600261115987" duration="5853000" />
       <workItem from="1600345020556" duration="945000" />
-      <workItem from="1600691199002" duration="3012000" />
+      <workItem from="1600691199002" duration="3367000" />
+      <workItem from="1602919733976" duration="83000" />
+      <workItem from="1603170279524" duration="82000" />
+      <workItem from="1603170363754" duration="1000" />
+      <workItem from="1603265164749" duration="1860000" />
     </task>
     <servers />
   </component>
@@ -158,9 +163,9 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1375" height="175" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1600268616870" />
-    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1598275639360">
+    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1603268311587">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1598275639360" />
+    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1603268311587" />
   </component>
 </project>

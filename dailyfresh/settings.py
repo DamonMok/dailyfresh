@@ -14,11 +14,6 @@ from pathlib import Path
 import os
 import sys
 
-# Celery
-CELERY_BROKER_URL = 'redis://192.168.1.21:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'redis://192.168.1.21:6379/0'
-CELERY_TASK_SERIALIZER = 'json'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -140,12 +135,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+
 # 富文本编辑器配置
 TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
     'width': 600,
     'height': 400,
 }
+
 
 # 163发送邮件配置
 # 发送Email配置
@@ -160,3 +157,26 @@ EMAIL_HOST_USER = 'damonmok1216@163.com'  # 你的邮箱名字
 EMAIL_HOST_PASSWORD = 'DOHEJSTCYXQTPUUK'  # 授权码
 # 收件人看到的发件人
 EMAIL_FROM = '天天生鲜<damonmok1216@163.com>'
+
+
+# Celery
+CELERY_BROKER_URL = 'redis://192.168.8.110:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = 'redis://192.168.8.110:6379/0'
+CELERY_TASK_SERIALIZER = 'json'
+
+
+# 配置redis作为缓存
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.8.110:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# 把session存储在redis中
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
