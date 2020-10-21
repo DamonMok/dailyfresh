@@ -90,7 +90,15 @@ class LoginView(View):
     """登录"""
     def get(self, request):
         """显示登录页面"""
-        return render(request, 'login.html')
+        # 判断是否记住了用户名
+        if 'username' in request.COOKIES:
+            username = request.COOKIES.get('username')
+            checked = 'checked'
+        else:
+            username = ''
+            checked = ''
+
+        return render(request, 'login.html', {'username': username, 'checked': checked})
 
     def post(self, request):
         # 1.获取数据
@@ -107,10 +115,18 @@ class LoginView(View):
             # 用户名、密码正确
             if user.is_active:
                 # 用户已激活
-                login(request, user)
+                login(request, user)  # 记录用户的登录状态
+
+                # 是否记住密码
+                remember = request.POST.get('remember')
+                response = redirect(reverse('goods:index'))
+                if remember == 'on':
+                    response.set_cookie('username', username, max_age=7*24*3600)
+                else:
+                    response.delete_cookie('username')
 
                 # 跳转到首页
-                return redirect(reverse('goods:index'))
+                return response
             else:
                 # 用户未激活
                 return render(request, 'login.html', {'err_msg': '用户未激活!'})
