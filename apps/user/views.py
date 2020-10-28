@@ -133,3 +133,30 @@ class LoginView(View):
         else:
             # 用户名、密码错误
             return render(request, 'login.html', {'err_msg': '用户名或密码错误!'})
+
+
+# /user
+class UserInfoView(View):
+    """用户中心-信息页"""
+    def get(self, request):
+        # 显示
+        current_page = 'info'
+        return render(request, 'user_center_info.html', {'current_page': current_page})
+
+
+# /user/order
+class UserOrderView(View):
+    """用户中心-订单页"""
+    def get(self, request):
+        # 显示
+        current_page = 'order'
+        return render(request, 'user_center_order.html', {'current_page': current_page})
+
+
+# /user/address
+class UserAddressView(View):
+    """用户中心-地址页"""
+    def get(self, request):
+        # 显示
+        current_page = 'address'
+        return render(request, 'user_center_site.html', {'current_page': current_page})
