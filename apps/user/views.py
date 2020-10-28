@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.views.generic import View
 from django.conf import settings
 from django.core.mail import send_mail
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 import re
 from apps.user.models import User
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -138,6 +138,14 @@ class LoginView(View):
         else:
             # 用户名、密码错误
             return render(request, 'login.html', {'err_msg': '用户名或密码错误!'})
+
+
+# user/logout
+class LogoutView(View):
+    """退出登录"""
+    def get(self, request):
+        logout(request)
+        return redirect(reverse('goods:index'))
 
 
 # /user
