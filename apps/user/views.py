@@ -117,9 +117,13 @@ class LoginView(View):
                 # 用户已激活
                 login(request, user)  # 记录用户的登录状态
 
+                # 获取登录成功需要跳转的页面
+                # 有next就跳转到next页面，没有next就跳转到首页
+                next_url = request.GET.get('next', reverse('goods:index'))
+                response = redirect(next_url)
+
                 # 是否记住密码
                 remember = request.POST.get('remember')
-                response = redirect(reverse('goods:index'))
                 if remember == 'on':
                     response.set_cookie('username', username, max_age=7*24*3600)
                 else:

@@ -160,9 +160,9 @@ EMAIL_FROM = '天天生鲜<damonmok1216@163.com>'
 
 
 # Celery
-CELERY_BROKER_URL = 'redis://192.168.8.110:6379/0'
+CELERY_BROKER_URL = 'redis://192.168.8.111:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'redis://192.168.8.110:6379/0'
+CELERY_RESULT_BACKEND = 'redis://192.168.8.111:6379/0'
 CELERY_TASK_SERIALIZER = 'json'
 
 
@@ -170,7 +170,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.8.110:6379/1",
+        "LOCATION": "redis://192.168.8.111:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -180,3 +180,8 @@ CACHES = {
 # 把session存储在redis中
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+
+
+# 若当前未登录，去访问要登录才能访问的页面时，会跳转到以下地址。
+# 跳转后会在地址栏带上?next=xxx参数。xxx为跳转前的页面地址
+LOGIN_URL = "/user/login"
