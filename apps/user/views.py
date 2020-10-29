@@ -177,10 +177,7 @@ class UserAddressView(LoginRequiredMixin, View):
 
         user = request.user
 
-        try:
-            address = Address.objects.get(user=user, is_default=True)
-        except Address.DoesNotExist:
-            address = None
+        address = Address.objects.get_default_address(user)
 
         return render(request, 'user_center_site.html', {'current_page': current_page, 'address': address})
 
@@ -204,10 +201,7 @@ class UserAddressView(LoginRequiredMixin, View):
         # 如果用户已存在默认收货地址，添加的地址不作为默认地址；否则作为默认收货地址
         user = request.user
 
-        try:
-            address = Address.objects.get(user=user, is_default=True)
-        except Address.DoesNotExist:
-            address = None
+        address = Address.objects.get_default_address(user)
 
         if address:
             is_default = False
