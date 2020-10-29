@@ -7,11 +7,13 @@ from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 import re
 from apps.user.models import User, Address
+from apps.goods.models import GoodsSKU
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
 from apps.user.tasks import email_to_activate_user
 # from utils.mixin import LoginRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django_redis import get_redis_connection
 
 
 # /user/register
@@ -157,11 +159,31 @@ class UserInfoView(LoginRequiredMixin, View):
         # 显示
         current_page = 'info'
 
-        # 获取数据
+        # 基本信息
         user = request.user
         address = Address.objects.get_default_address(user)
 
-        return render(request, 'user_center_info.html', {'current_page': current_page, 'address': address})
+        # 最近浏览
+        con = get_redis_connection('default')
+
+        history_key = 'history_%d'%user.id
+
+        # 获取用户最新浏览的5个商品id
+        sku_ids = con.lrange(history_key, 0, 4) # ->[2, 4, 1]
+
+        # 从数据库中查询商品的具体信息
+        goods_list = []
+        for sku_id in sku_ids:
+            goods = GoodsSKU.objects.get(id=sku_id)
+            goods_list.append(goods)
+
+        context = {
+            'current_page': current_page,
+            'address': address,
+            'goods_list': goods_list
+        }
+
+        return render(request, 'user_center_info.html', context)
 
 
 # /user/order

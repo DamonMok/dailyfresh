@@ -20,7 +20,7 @@ class AddressManager(models.Manager):
         """获取用户默认收货地址"""
         try:
             address = self.get(user=user, is_default=True)
-        except self.model.DoesNotExist:
+        except self.model.DoesNotExist:  # self.model代表模型类Address
             address = None
 
         return address
