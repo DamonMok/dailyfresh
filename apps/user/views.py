@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 import re
-from apps.user.models import User
+from apps.user.models import User, Address
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
 from apps.user.tasks import email_to_activate_user
@@ -174,4 +174,53 @@ class UserAddressView(LoginRequiredMixin, View):
     def get(self, request):
         # 显示
         current_page = 'address'
-        return render(request, 'user_center_site.html', {'current_page': current_page})
+
+        user = request.user
+
+        try:
+            address = Address.objects.get(user=user, is_default=True)
+        except Address.DoesNotExist:
+            address = None
+
+        return render(request, 'user_center_site.html', {'current_page': current_page, 'address': address})
+
+    def post(self, request):
+        # 接收数据
+        receiver = request.POST.get('receiver')
+        addr = request.POST.get('addr')
+        zip_code = request.POST.get('zip_code')
+        phone = request.POST.get('phone')
+
+        # 校验数据
+        if not all([receiver, addr, phone]):
+            # 校验数据完整性
+            return render(request, 'user_center_site.html', {'err_msg': '数据不完整!'})
+
+        if not re.match(r'^1[3|4|5|7|8|][0-9]{9}$', phone):
+            # 验证手机号
+            return render(request, 'user_center_site.html', {'err_msg': '手机格式不正确!'})
+
+        # 业务处理：地址添加
+        # 如果用户已存在默认收货地址，添加的地址不作为默认地址；否则作为默认收货地址
+        user = request.user
+
+        try:
+            address = Address.objects.get(user=user, is_default=True)
+        except Address.DoesNotExist:
+            address = None
+
+        if address:
+            is_default = False
+        else:
+            is_default = True
+
+        Address.objects.create(user=user,
+                               receiver=receiver,
+                               addr=addr,
+                               zip_code=zip_code,
+                               phone=phone,
+                               is_default=is_default)
+
+        # 返回应答
+        return redirect(reverse('user:address'))
+
