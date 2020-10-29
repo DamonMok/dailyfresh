@@ -156,7 +156,12 @@ class UserInfoView(LoginRequiredMixin, View):
     def get(self, request):
         # 显示
         current_page = 'info'
-        return render(request, 'user_center_info.html', {'current_page': current_page})
+
+        # 获取数据
+        user = request.user
+        address = Address.objects.get_default_address(user)
+
+        return render(request, 'user_center_info.html', {'current_page': current_page, 'address': address})
 
 
 # /user/order
