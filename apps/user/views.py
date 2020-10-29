@@ -10,7 +10,8 @@ from apps.user.models import User
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
 from apps.user.tasks import email_to_activate_user
-from utils.mixin import LoginRequiredMixin
+# from utils.mixin import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # /user/register
@@ -151,6 +152,7 @@ class LogoutView(View):
 # /user
 class UserInfoView(LoginRequiredMixin, View):
     """用户中心-信息页"""
+
     def get(self, request):
         # 显示
         current_page = 'info'

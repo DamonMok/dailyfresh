@@ -160,9 +160,9 @@ EMAIL_FROM = '天天生鲜<damonmok1216@163.com>'
 
 
 # Celery
-CELERY_BROKER_URL = 'redis://192.168.8.111:6379/0'
+CELERY_BROKER_URL = 'redis://192.168.8.115:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'redis://192.168.8.111:6379/0'
+CELERY_RESULT_BACKEND = 'redis://192.168.8.115:6379/0'
 CELERY_TASK_SERIALIZER = 'json'
 
 
@@ -170,7 +170,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.8.111:6379/1",
+        "LOCATION": "redis://192.168.8.115:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
