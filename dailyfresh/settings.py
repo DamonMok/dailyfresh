@@ -27,7 +27,7 @@ SECRET_KEY = 'y3!ggq+pak3$v#%5re-oa-5gd*tl-olabbd(w=nkqnp2$3alfw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -160,9 +160,9 @@ EMAIL_FROM = '天天生鲜<damonmok1216@163.com>'
 
 
 # Celery
-CELERY_BROKER_URL = 'redis://192.168.8.115:6379/0'
+CELERY_BROKER_URL = 'redis://192.168.8.118:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'redis://192.168.8.115:6379/0'
+CELERY_RESULT_BACKEND = 'redis://192.168.8.118:6379/0'
 CELERY_TASK_SERIALIZER = 'json'
 
 
@@ -170,7 +170,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.8.115:6379/1",
+        "LOCATION": "redis://192.168.8.118:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -185,3 +185,7 @@ SESSION_CACHE_ALIAS = "default"
 # 若当前未登录，去访问要登录才能访问的页面时，会跳转到以下地址。
 # 跳转后会在地址栏带上?next=xxx参数。xxx为跳转前的页面地址
 LOGIN_URL = "/user/login"
+
+
+# 自定义文件上传
+DEFAULT_FILE_STORAGE = "utils.storage.MinioStorage"
