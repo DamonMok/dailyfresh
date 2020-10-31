@@ -188,4 +188,9 @@ LOGIN_URL = "/user/login"
 
 
 # 自定义文件上传
+# 指定点击保存的时候，由哪个类去处理
 DEFAULT_FILE_STORAGE = "utils.storage.MinioStorage"
+
+# Minio存储端的url
+MINIO_BASE_URL = "192.168.8.118:9000"
+
