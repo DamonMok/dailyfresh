@@ -35,8 +35,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -60,15 +60,16 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates" />
+      <recent name="$PROJECT_DIR$/apps" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/static" />
       <recent name="$PROJECT_DIR$/apps/cart" />
       <recent name="$PROJECT_DIR$/apps/goods" />
       <recent name="$PROJECT_DIR$/apps/order" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/apps" />
     </key>
   </component>
   <component name="RunManager">
@@ -121,7 +122,9 @@
       <workItem from="1603867206077" duration="12286000" />
       <workItem from="1604036103094" duration="6465000" />
       <workItem from="1604046553564" duration="2702000" />
-      <workItem from="1604110257998" duration="11905000" />
+      <workItem from="1604110257998" duration="12299000" />
+      <workItem from="1604147974008" duration="1166000" />
+      <workItem from="1604205136586" duration="3804000" />
     </task>
     <servers />
   </component>
@@ -153,22 +156,22 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="507" y="222" key="FileChooserDialogImpl/0.23.1440.877@0.23.1440.877" timestamp="1603854259637" />
-    <state width="1375" height="231" key="GridCell.Tab.0.bottom" timestamp="1604067145077">
+    <state width="1375" height="231" key="GridCell.Tab.0.bottom" timestamp="1604206487051">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1375" height="231" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1604067145077" />
-    <state width="1375" height="231" key="GridCell.Tab.0.center" timestamp="1604067145076">
+    <state width="1375" height="231" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1604206487051" />
+    <state width="1375" height="231" key="GridCell.Tab.0.center" timestamp="1604206487050">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1375" height="231" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1604067145076" />
-    <state width="1375" height="231" key="GridCell.Tab.0.left" timestamp="1604067145075">
+    <state width="1375" height="231" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1604206487050" />
+    <state width="1375" height="231" key="GridCell.Tab.0.left" timestamp="1604206487050">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1375" height="231" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1604067145075" />
-    <state width="1375" height="231" key="GridCell.Tab.0.right" timestamp="1604067145076">
+    <state width="1375" height="231" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1604206487050" />
+    <state width="1375" height="231" key="GridCell.Tab.0.right" timestamp="1604206487051">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1375" height="231" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1604067145076" />
+    <state width="1375" height="231" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1604206487051" />
     <state width="1375" height="174" key="GridCell.Tab.1.bottom" timestamp="1604043177407">
       <screen x="0" y="23" width="1440" height="877" />
     </state>

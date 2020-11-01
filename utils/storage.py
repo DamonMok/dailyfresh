@@ -88,8 +88,8 @@ class MinioStorage(Storage):
             except ResponseError as err:
                 print(err)
             else:
-                # 5.获取文件在Minio的完整路径
-                file_path = 'http://%s/%s/%s' % (base_url, bucket_name, content.name)
+                # 5.获取文件在Minio的路径(不包括ip和端口)
+                file_path = '%s/%s' % (bucket_name, content.name)
 
         return file_path
 
@@ -97,4 +97,7 @@ class MinioStorage(Storage):
         return False
 
     def url(self, name):
-        return name
+        # image = models.ImageField(upload_to='type', verbose_name='商品类型图片')
+        # image.url就可以获取到完整的路径
+        full_path = 'http://%s/%s' % (settings.MINIO_BASE_URL, name)
+        return full_path
