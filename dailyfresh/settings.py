@@ -160,9 +160,9 @@ EMAIL_FROM = '天天生鲜<damonmok1216@163.com>'
 
 
 # Celery
-CELERY_BROKER_URL = 'redis://192.168.1.16:6379/0'
+CELERY_BROKER_URL = 'redis://192.168.8.114:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'redis://192.168.1.16:6379/0'
+CELERY_RESULT_BACKEND = 'redis://192.168.8.114:6379/0'
 CELERY_TASK_SERIALIZER = 'json'
 
 
@@ -170,7 +170,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.1.16:6379/1",
+        "LOCATION": "redis://192.168.8.114:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -187,10 +187,10 @@ SESSION_CACHE_ALIAS = "default"
 LOGIN_URL = "/user/login"
 
 
-# 自定义文件上传
+# 自定义文件上传(Minio)
 # 指定点击保存的时候，由哪个类去处理
 DEFAULT_FILE_STORAGE = "utils.storage.MinioStorage"
 
-# Minio存储端的url
-MINIO_BASE_URL = "192.168.1.16:9000"
+# Minio服务器的url
+MINIO_BASE_URL = "192.168.8.114:9000"
 

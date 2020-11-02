@@ -1,3 +1,4 @@
+import time, random
 from django.core.files.storage import Storage
 from django.conf import settings
 from minio import Minio
@@ -64,8 +65,8 @@ class MinioStorage(Storage):
 
         # 1.使用endpoint、access key和secret key来初始化minio_client对象。
         minio_client = Minio(base_url,
-                            access_key='minioadmin',
-                            secret_key='minioadmin',
+                            access_key='damonmok',
+                            secret_key='901216Damonmok',
                             secure=False)
 
         try:
@@ -84,12 +85,13 @@ class MinioStorage(Storage):
             try:
                 # 4.上传文件
                 # 需要设置content_type为图片，不然通过路径读取图片的时候，会直接下载到本地，不会显示在网页上
-                minio_client.put_object(bucket_name, content.name, content, content.size, content_type='image/jpeg')
+                file_name = name+str(int(time.time()))+str(random.randint(100000, 999999))  # 防止文件重名覆盖
+                minio_client.put_object(bucket_name, file_name, content, content.size, content_type='image/jpeg')
             except ResponseError as err:
                 print(err)
             else:
                 # 5.获取文件在Minio的路径(不包括ip和端口)
-                file_path = '%s/%s' % (bucket_name, content.name)
+                file_path = '%s/%s' % (bucket_name, file_name)
 
         return file_path
 
