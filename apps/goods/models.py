@@ -38,7 +38,7 @@ class GoodsSKU(BaseModel):
 
     class Meta:
         db_table = 'df_goods_sku'
-        verbose_name = '商品'
+        verbose_name = '商品SKU'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -100,7 +100,7 @@ class IndexTypeGoodsBanner(BaseModel):
 
     class Meta:
         db_table = 'df_index_type_goods'
-        verbose_name = "主页分类展示商品"
+        verbose_name = "主页分类商品"
         verbose_name_plural = verbose_name
 
     def __str__(self):

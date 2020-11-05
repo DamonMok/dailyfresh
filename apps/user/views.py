@@ -163,9 +163,9 @@ class UserInfoView(LoginRequiredMixin, View):
         user = request.user
         address = Address.objects.get_default_address(user)
 
-        # 最近浏览
+        # 最近浏览:使用redis的list存储
+        # listName[item, item, ....]----->history_userID[skuID1, skuID2, ...]
         con = get_redis_connection('default')
-
         history_key = 'history_%d'%user.id
 
         # 获取用户最新浏览的5个商品id

@@ -21,12 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c17215d1-2629-4edc-8381-e9f63fdf884e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/goods/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/goods/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/goods/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/goods/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/goods/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/goods/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dailyfresh/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dailyfresh/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/type/banner03.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +128,7 @@
       <workItem from="1604147974008" duration="1166000" />
       <workItem from="1604205136586" duration="19045000" />
       <workItem from="1604373724048" duration="63000" />
-      <workItem from="1604541017314" duration="4150000" />
+      <workItem from="1604541017314" duration="6468000" />
     </task>
     <servers />
   </component>
@@ -202,9 +200,9 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="507" y="382" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.877@0.23.1440.877" timestamp="1603949887582" />
-    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1603862085061">
+    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1604549643018">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1603862085061" />
+    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1604549643018" />
   </component>
 </project>
