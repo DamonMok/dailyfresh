@@ -138,7 +138,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # 富文本编辑器配置
 TINYMCE_DEFAULT_CONFIG = {
-    'theme': 'advanced',
+    # 'theme': 'advanced',
     'width': 600,
     'height': 400,
 }
@@ -160,9 +160,9 @@ EMAIL_FROM = '天天生鲜<damonmok1216@163.com>'
 
 
 # Celery
-CELERY_BROKER_URL = 'redis://192.168.8.114:6379/0'
+CELERY_BROKER_URL = 'redis://192.168.8.116:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'redis://192.168.8.114:6379/0'
+CELERY_RESULT_BACKEND = 'redis://192.168.8.116:6379/0'
 CELERY_TASK_SERIALIZER = 'json'
 
 
@@ -170,7 +170,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.8.114:6379/1",
+        "LOCATION": "redis://192.168.8.116:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -192,5 +192,5 @@ LOGIN_URL = "/user/login"
 DEFAULT_FILE_STORAGE = "utils.storage.MinioStorage"
 
 # Minio服务器的url
-MINIO_BASE_URL = "192.168.8.114:9000"
+MINIO_BASE_URL = "192.168.8.116:9000"
 
