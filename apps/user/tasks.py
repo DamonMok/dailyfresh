@@ -22,6 +22,6 @@ def email_to_activate_user(username, user_id, email):
     sender = settings.EMAIL_FROM
     receiver = [email]
     html_message = '<h1>%s,欢迎您成为天天生鲜注册会员</h1><h1>请点击下面链接激活您的账户</h1><br /><a ' \
-                   'href="http://192.168.8.115:8888/user/active/%s">http://192.168.8.115:8888/user/active/%s</a>' % \
-                   (username, token, token)
+                   'href="http://%s:8888/user/active/%s">http://%s:8888/user/active/%s</a>' % \
+                   (username, settings.redis_celery_minio_ip, token, settings.redis_celery_minio_ip, token)
     send_mail(subject, message, sender, receiver, html_message=html_message)
