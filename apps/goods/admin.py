@@ -45,6 +45,14 @@ class IndexTypeGoodsBannerAdmin(BaseAdmin):
     pass
 
 
+class GoodsAdmin(BaseAdmin):
+    pass
+
+
+class GoodsSKUAdmin(BaseAdmin):
+    pass
+
+
 admin.site.register(GoodsType, GoodsTypeAdmin)
 
 admin.site.register(IndexGoodsBanner, IndexGoodsBannerAdmin)
@@ -52,3 +60,11 @@ admin.site.register(IndexGoodsBanner, IndexGoodsBannerAdmin)
 admin.site.register(IndexPromotionBanner, IndexPromotionBannerAdmin)
 
 admin.site.register(IndexTypeGoodsBanner, IndexTypeGoodsBannerAdmin)
+
+admin.site.register(Goods, GoodsAdmin)
+
+admin.site.register(GoodsSKU, GoodsSKUAdmin)
+
+
+
+

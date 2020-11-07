@@ -15,7 +15,7 @@ import os
 import sys
 
 
-redis_celery_minio_ip = '192.168.8.115'
+redis_celery_minio_ip = '192.168.1.11'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -140,7 +140,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # 富文本编辑器配置
 TINYMCE_DEFAULT_CONFIG = {
-    # 'theme': 'advanced',
+    'theme': 'silver',
     'width': 600,
     'height': 400,
 }

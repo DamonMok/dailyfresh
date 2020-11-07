@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.views.generic import View
 from django.core.cache import cache
-from .models import GoodsType, IndexGoodsBanner, IndexPromotionBanner, IndexTypeGoodsBanner
+from .models import GoodsType, IndexGoodsBanner, IndexPromotionBanner, IndexTypeGoodsBanner, GoodsSKU
+from apps.order.models import OrderGoods
 from django_redis import get_redis_connection
 
 
@@ -67,4 +68,36 @@ class IndexView(View):
 class DetailView(View):
     """详情页"""
     def get(self, request, goods_id):
-        return render(request, 'detail.html')
+
+        try:
+            sku = GoodsSKU.objects.get(id=goods_id)
+        except GoodsSKU.DoesNotExist:
+            return redirect(reverse('goods:index'))
+
+        # 获取商品的分类信息
+        types = GoodsType.objects.all()
+
+        # 获取商品的评论信息
+        sku_order = OrderGoods.objects.filter(sku=sku).exclude(comment='')
+
+        # 获取商品的新品信息
+        new_skus = GoodsSKU.objects.filter(type=sku.type).order_by('-create_time')
+
+        # 购物车
+        cart_count = 0
+        user = request.user
+        if user.is_authenticated:
+            # 已经登录
+            con = get_redis_connection('default')
+            cart_key = 'cart_%d' % user.id
+            cart_count = con.hlen(cart_key)
+
+        context = {
+            "sku": sku,
+            "types": types,
+            "sku_order": sku_order,
+            "new_skus": new_skus,
+            "cart_count": cart_count
+        }
+
+        return render(request, 'detail.html', context)
