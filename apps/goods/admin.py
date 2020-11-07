@@ -13,6 +13,14 @@ class BaseAdmin(admin.ModelAdmin):
         from .tasks import generate_static_index
         generate_static_index.delay()
 
+    def delete_model(self, request, obj):
+        """ 删除模型 """
+        super().delete_model(request, obj)
+
+        # celery生成首页静态页面
+        from .tasks import generate_static_index
+        generate_static_index.delay()
+
 
 class GoodsTypeAdmin(BaseAdmin):
     pass
