@@ -5,7 +5,7 @@ from .models import GoodsType, IndexGoodsBanner, IndexPromotionBanner, IndexType
 from django_redis import get_redis_connection
 
 
-# 127.0.0.1:8000
+# /index
 class IndexView(View):
     """首页"""
     def get(self, request):
@@ -16,7 +16,7 @@ class IndexView(View):
         context = cache.get('index_page_data')  # 从缓存中获取
 
         if context is None:
-
+            print('首页数据:数据库')
             # 缓存为空，从数据库中查询数据，并设置缓存
             # 商品类型
             goods_type = GoodsType.objects.all()
@@ -44,6 +44,8 @@ class IndexView(View):
             # 把各用户相同的数据存入缓存
             # set(key, value, time_out) value可以是任意python对象
             cache.set('index_page_data', context, 3600)
+        else:
+            print('首页数据:缓存')
 
         # 各用户不同的数据
         # 购物车:使用redis的hash存储
@@ -59,3 +61,10 @@ class IndexView(View):
         context.update(cart_count=cart_count)
 
         return render(request, 'index.html', context=context)
+
+
+# /goods/1
+class DetailView(View):
+    """详情页"""
+    def get(self, request, goods_id):
+        return render(request, 'detail.html')
