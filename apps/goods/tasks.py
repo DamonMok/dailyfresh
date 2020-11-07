@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 import os
 from django.conf import settings
-from django.template import loader, RequestContext
+from django.template import loader
 from celery import shared_task
 from .models import GoodsType, IndexGoodsBanner, IndexPromotionBanner, IndexTypeGoodsBanner
 
@@ -16,7 +16,7 @@ def generate_static_index():
     goods_banner = IndexGoodsBanner.objects.all().order_by('index')
 
     # 首页促销活动
-    promotion_banner = IndexPromotionBanner.objects.all()
+    promotion_banner = IndexPromotionBanner.objects.all().order_by('index')
 
     # 首页分类商品
     for kind in goods_type:

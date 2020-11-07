@@ -17,7 +17,7 @@ class IndexView(View):
         goods_banner = IndexGoodsBanner.objects.all().order_by('index')
 
         # 首页促销活动
-        promotion_banner = IndexPromotionBanner.objects.all()
+        promotion_banner = IndexPromotionBanner.objects.all().order_by('index')
 
         # 首页分类商品
         for kind in goods_type:
