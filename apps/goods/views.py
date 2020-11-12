@@ -49,12 +49,13 @@ class IndexView(View):
             print('首页数据:缓存')
 
         # 各用户不同的数据
-        # 购物车:使用redis的hash存储
-        # hashName[key:value]---->cart_userID[skuID:cartCount]
         cart_count = 0
         user = request.user
         if user.is_authenticated:
             # 已经登录
+
+            # 购物车:使用redis的hash存储
+            # hashName[key:value]---->cart_userID[skuID:cartCount]
             con = get_redis_connection('default')
             cart_key = 'cart_%d' % user.id
             cart_count = con.hlen(cart_key)
@@ -81,16 +82,25 @@ class DetailView(View):
         sku_order = OrderGoods.objects.filter(sku=sku).exclude(comment='')
 
         # 获取商品的新品信息
-        new_skus = GoodsSKU.objects.filter(type=sku.type).order_by('-create_time')
+        new_skus = GoodsSKU.objects.filter(type=sku.type).order_by('-create_time')[:2]
 
         # 购物车
         cart_count = 0
         user = request.user
         if user.is_authenticated:
             # 已经登录
+
+            # 购物车:使用redis的hash存储
+            # hashName[key:value]---->cart_userID[skuID:cartCount]
             con = get_redis_connection('default')
             cart_key = 'cart_%d' % user.id
             cart_count = con.hlen(cart_key)
+
+            # 历史浏览记录:history_user.id : [h1, h2, h3, ...]
+            history_key = 'history_%d' % user.id
+            con.lrem(history_key, 0, goods_id)  # 删除历史记录数组内已经存在的商品
+            con.lpush(history_key, goods_id)  # 把当前浏览的商品，加入到历史浏览记录数组里面
+            con.ltrim(history_key, 0, 4)  # 只保存5个商品记录
 
         context = {
             "sku": sku,

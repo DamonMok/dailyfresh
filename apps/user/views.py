@@ -166,10 +166,10 @@ class UserInfoView(LoginRequiredMixin, View):
         # 最近浏览:使用redis的list存储
         # listName[item, item, ....]----->history_userID[skuID1, skuID2, ...]
         con = get_redis_connection('default')
-        history_key = 'history_%d'%user.id
+        history_key = 'history_%d' % user.id
 
         # 获取用户最新浏览的5个商品id
-        sku_ids = con.lrange(history_key, 0, 4) # ->[2, 4, 1]
+        sku_ids = con.lrange(history_key, 0, 4)  # ->[2, 4, 1]
 
         # 从数据库中查询商品的具体信息
         goods_list = []
