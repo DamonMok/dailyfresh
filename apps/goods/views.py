@@ -164,6 +164,21 @@ class ListView(View):
 
         skus_page = paginator.page(page)
 
+        # 自定义页码控制，最多显示5个页码(分页器的paginator.page_range显示的是所有的页码)
+        # 1.如果总页数少于5，显示所有页码
+        # 2.如果是前3页，显示1-5页
+        # 3.如果是后3页，显示后5页
+        # 4.其他情况，显示当前页前2页、当前页、当前页后2页
+        num_pages = paginator.num_pages
+        if num_pages < 5:
+            pages = range(1, num_pages+1)
+        elif page < 3:
+            pages = range(1, 6)
+        elif page >= num_pages-2:
+            pages = range(num_pages-4, num_pages+1)
+        else:
+            pages = range(page-2, page+3)
+
         # 购物车
         cart_count = 0
         user = request.user
@@ -177,7 +192,7 @@ class ListView(View):
             cart_count = con.hlen(cart_key)
 
         context = {
-            "page": page,
+            "pages": pages,
             "sort": sort,
             "goods_type": goods_type,
             "types": types,
