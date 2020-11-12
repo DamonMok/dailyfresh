@@ -4,6 +4,14 @@
 	{% block title %}天天生鲜-商品详情{% endblock %}
 
 {% block main_content %}
+    <div class="breadcrumb">
+		<a href="#">全部分类</a>
+		<span>></span>
+		<a href="#">{{ sku.type.name }}</a>
+		<span>></span>
+		<a href="#">商品详情</a>
+	</div>
+
 	<div class="goods_detail_con clearfix">
 		<div class="goods_detail_pic fl"><img src="{{ sku.image.url }}"></div>
 

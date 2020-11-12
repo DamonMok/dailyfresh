@@ -25,7 +25,7 @@
 	<div class="center_con clearfix">
 		<ul class="subnav fl">
             {% for type in goods_type %}
-            <li><a href="#model0{{ forloop.counter }}" class="{{ type.logo }}">{{ type.name }}</a></li>
+            <li><a href="{% url 'goods:list' type.id 1 %}?sort=default" class="{{ type.logo }}">{{ type.name }}</a></li>
             {% endfor %}
 		</ul>
 		<div class="slide fl">

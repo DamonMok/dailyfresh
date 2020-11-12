@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import View
 from django.core.cache import cache
+from django.core.paginator import Paginator
 from .models import GoodsType, IndexGoodsBanner, IndexPromotionBanner, IndexTypeGoodsBanner, GoodsSKU
 from apps.order.models import OrderGoods
 from django_redis import get_redis_connection
@@ -115,3 +116,87 @@ class DetailView(View):
         }
 
         return render(request, 'detail.html', context)
+
+
+# list/种类id/页码?sort=排序方式
+class ListView(View):
+    """ 列表页 """
+    def get(self, request, type_id, page):
+        # 显示列表页
+        try:
+            goods_type = GoodsType.objects.get(id=type_id)
+        except GoodsType.DoesNotExist:
+            # 种类不存在
+            return redirect(reverse('goods:index'))
+
+        # 获取商品的分类信息
+        types = GoodsType.objects.all()
+
+        # 获取商品的新品信息
+        new_skus = GoodsSKU.objects.filter(type=goods_type).order_by('-create_time')[:2]
+
+        # 获取排序方式：
+        # default:默认按照id降序排列
+        # price:按照价格升序
+        # hot:按照人气降序
+        sort = request.GET.get('sort')
+
+        # 按排序方式获取全部商品
+        if sort == "price":
+            skus = GoodsSKU.objects.filter(type=goods_type).order_by('price')
+        elif sort == "hot":
+            skus = GoodsSKU.objects.filter(type=goods_type).order_by('-sales')
+        else:
+            sort = "default"
+            skus = GoodsSKU.objects.filter(type=goods_type).order_by('-id')
+
+        # 生成分页器
+        paginator = Paginator(skus, 1)  # 每页显示一条
+
+        # 获取第page页的Page实例对象
+        try:
+            page = int(page)
+        except Exception as e:
+            page = 1
+
+        if page > paginator.num_pages:
+            page = 1
+
+        skus_page = paginator.page(page)
+
+        # 购物车
+        cart_count = 0
+        user = request.user
+        if user.is_authenticated:
+            # 已经登录
+
+            # 购物车:使用redis的hash存储
+            # hashName[key:value]---->cart_userID[skuID:cartCount]
+            con = get_redis_connection('default')
+            cart_key = 'cart_%d' % user.id
+            cart_count = con.hlen(cart_key)
+
+        context = {
+            "page": page,
+            "sort": sort,
+            "goods_type": goods_type,
+            "types": types,
+            "new_skus": new_skus,
+            "skus_page": skus_page,
+            "cart_count": cart_count,
+        }
+
+        return render(request, 'list.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -21,8 +21,11 @@
   <component name="ChangeListManager">
     <list default="true" id="c17215d1-2629-4edc-8381-e9f63fdf884e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/goods/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/goods/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/goods/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/goods/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base_detail_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_detail_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,17 +63,17 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/templates" />
-      <recent name="$PROJECT_DIR$/apps" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/apps/goods" />
       <recent name="$PROJECT_DIR$/static" />
       <recent name="$PROJECT_DIR$/apps/cart" />
       <recent name="$PROJECT_DIR$/apps/order" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/templates" />
+      <recent name="$PROJECT_DIR$/apps" />
     </key>
   </component>
   <component name="RunManager">
@@ -132,7 +135,7 @@
       <workItem from="1604561217815" duration="380000" />
       <workItem from="1604562307014" duration="25573000" />
       <workItem from="1605085939654" duration="3524000" />
-      <workItem from="1605148876141" duration="4485000" />
+      <workItem from="1605148876141" duration="14262000" />
     </task>
     <servers />
   </component>
@@ -208,9 +211,9 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="507" y="382" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.877@0.23.1440.877" timestamp="1603949887582" />
-    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1604739502749">
+    <state x="390" y="213" width="670" height="158" key="search.everywhere.popup" timestamp="1605165984774">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="390" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1604739502749" />
+    <state x="390" y="213" width="670" height="158" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1605165984774" />
   </component>
 </project>
