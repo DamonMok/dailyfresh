@@ -78,6 +78,9 @@ class DetailView(View):
         # 获取商品的分类信息
         types = GoodsType.objects.all()
 
+        # 同类商品(SPU)的其他规格(SKU)
+        same_spu_skus = GoodsSKU.objects.filter(goods=sku.goods).exclude(id=goods_id)
+
         # 获取商品的评论信息
         sku_order = OrderGoods.objects.filter(sku=sku).exclude(comment='')
 
@@ -104,6 +107,7 @@ class DetailView(View):
 
         context = {
             "sku": sku,
+            "same_spu_skus": same_spu_skus,
             "types": types,
             "sku_order": sku_order,
             "new_skus": new_skus,
