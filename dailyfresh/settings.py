@@ -201,11 +201,12 @@ MINIO_BASE_URL = "%s:9000" % redis_celery_minio_ip
 # 全文检索(haystack)引擎配置,使用Whoosh搜索引擎
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
     },
 }
 
+# 当数据模型增删改时，会自动更新索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 

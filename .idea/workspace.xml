@@ -21,9 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c17215d1-2629-4edc-8381-e9f63fdf884e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/goods/search_indexes.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/goods/search_indexes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dailyfresh/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dailyfresh/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dailyfresh/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dailyfresh/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/whoosh_index/MAIN_hael42yilnz8h96w.seg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/whoosh_index/_MAIN_1.toc" beforeDir="false" afterPath="$PROJECT_DIR$/whoosh_index/_MAIN_1.toc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +134,7 @@
       <workItem from="1604561217815" duration="380000" />
       <workItem from="1604562307014" duration="25573000" />
       <workItem from="1605085939654" duration="3524000" />
-      <workItem from="1605148876141" duration="22700000" />
+      <workItem from="1605148876141" duration="27482000" />
     </task>
     <servers />
   </component>
