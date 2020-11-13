@@ -15,7 +15,7 @@ import os
 import sys
 
 
-redis_celery_minio_ip = '192.168.1.11'
+redis_celery_minio_ip = '192.168.8.115'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',  # 富文本
+    'haystack',  # 全文检索框架
     'apps.user',  # 用户模块
     'apps.goods',  # 商品模块
     'apps.cart',  # 购物车模块
@@ -195,4 +196,20 @@ DEFAULT_FILE_STORAGE = "utils.storage.MinioStorage"
 
 # Minio服务器的url
 MINIO_BASE_URL = "%s:9000" % redis_celery_minio_ip
+
+
+# 全文检索(haystack)引擎配置,使用Whoosh搜索引擎
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+
+
+
+
 
