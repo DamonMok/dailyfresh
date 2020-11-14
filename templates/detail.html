@@ -25,7 +25,8 @@
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>
 				<div class="num_add fl">
-					<input type="text" class="num_show fl" value="1">
+                    {% csrf_token %}
+					<input type="text" sku_id="{{ sku.id }}" class="num_show fl" value="1">
 					<a href="javascript:;" class="add fr">+</a>
 					<a href="javascript:;" class="minus fr">-</a>	
 				</div> 
@@ -148,17 +149,37 @@
 		var $to_x = $('#show_count').offset().top;
 		var $to_y = $('#show_count').offset().left;
 
-		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
 		$('#add_cart').click(function(){
-			$(".add_jump").stop().animate({
-				'left': $to_y+7,
-				'top': $to_x+7},
-				"fast", function() {
-					$(".add_jump").fadeOut('fast',function(){
-						$('#show_count').html(2);
-					});
+		    // 获取商品id、商品数量
+            sku_id = $('.num_show').attr('sku_id')
+            count = $('.num_show').val()
+            csrf = $('input[name="csrfmiddlewaretoken"]').val()
 
+            // 组织参数
+            params = {'sku_id': sku_id, 'count': count, 'csrfmiddlewaretoken': csrf}
+
+            // 发起ajax post请求，访问/cart/add, 传递参数：sku_id count csrf
+            $.post('/cart/add/', params, function (data) {
+                // 回调
+                if (data.res == 5){
+                    // 添加成功
+                    $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
+                    $(".add_jump").stop().animate({
+                        'left': $to_y+7,
+                        'top': $to_x+7},
+                        "fast", function() {
+                            $(".add_jump").fadeOut('fast',function(){
+                                // 重新设置购物车中商品的条目数
+                                $('#show_count').html(data.total_count);
+					});
 			});
+                } else {
+                    // 添加失败
+                    alert(data.errmsg)
+                }
+            })
+
+
 		})
 	</script>
 {% endblock %}

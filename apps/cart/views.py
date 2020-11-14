@@ -7,7 +7,7 @@ from django_redis import get_redis_connection
 # Create your views here.
 class CartAddView(View):
     """ 购物车记录添加 """
-    def get(self, request):
+    def post(self, request):
         """ 购物车记录添加"""
         user = request.user
         if not user.is_authenticated:
@@ -32,7 +32,7 @@ class CartAddView(View):
 
         # 校验商品是否存在
         try:
-            sku = GoodsSKU.objects.get(sku_id)
+            sku = GoodsSKU.objects.get(id=sku_id)
         except GoodsSKU.DoesNotExist:
             return JsonResponse({'res': 3, 'errmsg': '商品不存在'})
 
@@ -42,9 +42,9 @@ class CartAddView(View):
         # 查找redis数据库中是否已经有该记录
         # 已存在则更新，不存在就添加
         cart_count = con.hget(cart_key, sku_id)
-        if cart_key:
+        if cart_count:
             # 已存在，累加购物车商品的数目
-            count += cart_count
+            count += int(cart_count)
 
         # 校验商品的库存
         if count > sku.stock:
@@ -54,8 +54,11 @@ class CartAddView(View):
         # 如果sku_id已存在，则更新；没有，则添加
         con.hset(cart_key, sku_id, count)
 
+        # 获取用户购物车商品的条目数
+        total_count = con.hlen(cart_key)
+
         # 返回应答
-        return JsonResponse({'res': 5, 'errmsg': '添加成功'})
+        return JsonResponse({'res': 5, 'total_count': total_count, 'errmsg': '添加成功'})
 
 
 
