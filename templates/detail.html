@@ -95,6 +95,53 @@
 {% block bottomfiles %}
 	<script type="text/javascript" src={% static "js/jquery-1.12.4.min.js" %}></script>
 	<script type="text/javascript">
+        update_goods_amount()
+
+        // 计算商品的总价
+        function update_goods_amount() {
+            price = $('.show_pirze').children('em').text()  // 商品单价
+            count = $('.num_show').val()  // 商品数量
+            amount = parseFloat(price) * parseInt(count)
+            $('.total').children('em').text(amount.toFixed(2))
+        }
+
+        // 增加商品数量
+        $('.add').click(function () {
+            count = $('.num_show').val()  // 获取当前数量
+            count = parseInt(count)+1
+            $('.num_show').val(count)  // 设置数量
+            update_goods_amount()  // 更新总价
+        })
+
+        // 减少商品数量
+        $('.minus').click(function () {
+            count = $('.num_show').val()  // 获取当前数量
+            count = parseInt(count)-1
+
+            if (count <= 0){
+                count = 1  // 最小数量为1
+            }
+
+            $('.num_show').val(count)  // 设置数量
+            update_goods_amount()  // 更新总价
+        })
+
+        // 校验用户输入的商品数量
+        $('.num_show').blur(function () {
+            count = $(this).val()
+
+            if (isNaN(count) || count.trim().length==0 || parseInt(parseFloat(count)) <=0){
+                // 如果输入的非数字、空格、负数
+                count = 1
+            }
+
+            // 设置显示用户的输入结果
+            $(this).val(parseInt(parseFloat(count)))
+
+            // 更新总价
+            update_goods_amount()
+        })
+
 		var $add_x = $('#add_cart').offset().top;
 		var $add_y = $('#add_cart').offset().left;
 

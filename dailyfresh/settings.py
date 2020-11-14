@@ -15,7 +15,7 @@ import os
 import sys
 
 
-redis_celery_minio_ip = '192.168.8.115'
+redis_celery_minio_ip = '192.168.8.116'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -209,6 +209,8 @@ HAYSTACK_CONNECTIONS = {
 # 当数据模型增删改时，会自动更新索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
+# 配置Haystack搜索结果每页多少条数据
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 1
 
 
 
