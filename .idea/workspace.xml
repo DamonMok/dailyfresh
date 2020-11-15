@@ -21,6 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c17215d1-2629-4edc-8381-e9f63fdf884e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/cart/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/cart/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cart.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +133,7 @@
       <workItem from="1604562307014" duration="25573000" />
       <workItem from="1605085939654" duration="3524000" />
       <workItem from="1605148876141" duration="27531000" />
-      <workItem from="1605265550897" duration="29136000" />
+      <workItem from="1605265550897" duration="31373000" />
     </task>
     <servers />
   </component>
@@ -207,9 +209,9 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="507" y="382" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.877@0.23.1440.877" timestamp="1603949887582" />
-    <state x="390" y="213" width="670" height="158" key="search.everywhere.popup" timestamp="1605432008528">
+    <state x="390" y="213" width="670" height="158" key="search.everywhere.popup" timestamp="1605446178960">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="390" y="213" width="670" height="158" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1605432008528" />
+    <state x="390" y="213" width="670" height="158" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1605446178960" />
   </component>
 </project>

@@ -185,8 +185,11 @@ class CartDeleteView(View):
 
         con.hdel(cart_key, sku_id)  # 删除
 
-        # 获取用户购物车商品的条目数
-        total_count = con.hlen(cart_key)
+        # 获取总件数
+        total_count = 0
+        counts = con.hvals(cart_key)  # 获取所有的值(count)
+        for count in counts:
+            total_count += int(count)
 
         # 返回应答
         return JsonResponse({'res': 3, 'total_count': total_count, 'errmsg': '删除成功'})
