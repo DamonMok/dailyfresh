@@ -84,17 +84,13 @@
             update_page_info()
         })
 
-        // 商品的增加
-        $('.add').click(function () {
-            // 获取对应商品的sku_id、count
-            sku_id = $(this).next().attr('sku_id')
-            count = $(this).next().val()
-            count = parseInt(count) + 1
+        // 更新购物车记录
+        error_update = false
+        total_count = 0
+        function update_cart_info (sku_id, count) {
             csrf = $('input[name=csrfmiddlewaretoken]').val()
-
             // 组织参数
             params = {'sku_id': sku_id, 'count': count, 'csrfmiddlewaretoken': csrf}
-            error_update = false
 
             // 设置Ajax请求为同步
             $.ajaxSettings.async = false
@@ -109,6 +105,18 @@
             })
             // 设置Ajax请求为异步
             $.ajaxSettings.async = true  // 因为是全局，所以这里需要重新设置成异步
+        }
+
+
+        // 商品的增加
+        $('.add').click(function () {
+            // 获取对应商品的sku_id、count
+            sku_id = $(this).next().attr('sku_id')
+            count = $(this).next().val()
+            count = parseInt(count) + 1
+
+            // 更新记录
+            update_cart_info(sku_id, count)
 
             if (error_update == false){
                 // 更新成功后
@@ -139,27 +147,10 @@
 
             if (parseInt(count) <=1 )
                 return
-
             count = parseInt(count) - 1
-            csrf = $('input[name=csrfmiddlewaretoken]').val()
 
-            // 组织参数
-            params = {'sku_id': sku_id, 'count': count, 'csrfmiddlewaretoken': csrf}
-            error_update = false
-
-            // 设置Ajax请求为同步
-            $.ajaxSettings.async = false
-            $.post('/cart/update', params, function (data) {
-                if (data.res == 5){
-                    error_update = false  // 更新成功
-                    total_count = data.total_count
-                } else {
-                    error_update = true  // 更新失败
-                    alert(data.errmsg)
-                }
-            })
-            // 设置Ajax请求为异步
-            $.ajaxSettings.async = true  // 因为是全局，所以这里需要重新设置成异步
+            // 更新记录
+            update_cart_info(sku_id, count)
 
             if (error_update == false){
                 // 更新成功后
@@ -181,5 +172,7 @@
                 $('.total_count').find('em').text(total_count)
             }
         })
+
+
     </script>
 {% endblock %}
