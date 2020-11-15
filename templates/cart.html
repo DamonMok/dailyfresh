@@ -1,4 +1,5 @@
 {% extends 'base_no_cart.html' %}
+{% load static %}
 {% block title %}天天生鲜-购物车{% endblock %}
 {% block page_title %}购物车{% endblock %}
 {% block body %}
@@ -36,4 +37,50 @@
 		<li class="col03">合计(不含运费)：<span>¥</span><em>{{ total_price }}</em><br>共计<b>{{ total_count }}</b>件商品</li>
 		<li class="col04"><a href="place_order.html">去结算</a></li>
 	</ul>
+{% endblock %}
+
+{% block bottomfiles %}
+    <script type="text/javascript" src={% static 'js/jquery-1.12.4.min.js' %}></script>
+    <script type="text/javascript">
+
+        // 更新页面数目、合计信息
+        function update_page_info () {
+            total_price = 0  // 商品合计
+            total_count = 0  // 商品数目
+
+            $('.cart_list_td').find(':checked').parents('ul').each(function () {
+                total_count += parseInt($(this).find('.num_show').val())
+                total_price += parseFloat($(this).children('.col07').text())
+            })
+
+            // 设置商品总数、合计
+            $('.settlements').find('em').text(total_price)
+            $('.settlements').find('b').text(total_count)
+        }
+
+        // 全选和全不选
+        $('.settlements').find(':checkbox').change(function () {
+            is_checked = $(this).prop('checked')  // 获取全选框的状态
+            $('.cart_list_td').find(':checkbox').each(function () {
+                $(this).prop('checked', is_checked)  // 所有商品根据全选框的状态，进行全选和全不选
+            })
+            update_page_info()
+        })
+
+        // 商品的选中和取消选中
+        $('.cart_list_td').find(':checkbox').change(function () {
+            // 对应修改【全选】复选框的选择状态
+            total_count = $('.cart_list_td').length
+            current_count = $('.cart_list_td').find(':checked').length
+            is_checked = true
+            if (current_count < total_count) {
+                is_checked = false
+            }
+            $('.settlements').find(':checkbox').prop('checked', is_checked)
+
+            // 更新页面信息
+            update_page_info()
+        })
+
+    </script>
 {% endblock %}

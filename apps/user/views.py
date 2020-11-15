@@ -126,7 +126,7 @@ class LoginView(View):
                 next_url = request.GET.get('next', reverse('goods:index'))
                 response = redirect(next_url)
 
-                # 是否记住密码
+                # 是否记住用户名
                 remember = request.POST.get('remember')
                 if remember == 'on':
                     response.set_cookie('username', username, max_age=7*24*3600)
