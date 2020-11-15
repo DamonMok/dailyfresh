@@ -70,13 +70,14 @@
         // 商品的选中和取消选中
         $('.cart_list_td').find(':checkbox').change(function () {
             // 对应修改【全选】复选框的选择状态
-            total_count = $('.cart_list_td').length
-            current_count = $('.cart_list_td').find(':checked').length
+            total_count = $('.cart_list_td').find(':checkbox').length  // 商品总数目
+            current_count = $('.cart_list_td').find(':checked').length  // 已选商品数目
             is_checked = true
             if (current_count < total_count) {
+                // 已选商品数量 小于 商品总数目，状态设为未选中
                 is_checked = false
             }
-            $('.settlements').find(':checkbox').prop('checked', is_checked)
+            $('.settlements').find(':checkbox').prop('checked', is_checked)  // 设置【全选】的选中状态
 
             // 更新页面信息
             update_page_info()

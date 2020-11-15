@@ -7,6 +7,7 @@ from utils.mixin import LoginRequiredMixin
 from django_redis import get_redis_connection
 
 
+# Ajax
 # /cart/add
 class CartAddView(View):
     """ 购物车记录添加 """
@@ -99,3 +100,44 @@ class CartInfoView(LoginRequiredMixin, View):
         return render(request, 'cart.html', context)
 
 
+# Ajax
+class CartUpdateView(View):
+    """ 购物车记录更新 """
+    def post(self, request):
+        user = request.user
+        if not user.is_authenticated:
+            # 用户未登录
+            return JsonResponse({'res': 0, 'errmsg': '请先登录'})
+
+        # 数据接收
+        sku_id = request.POST.get('sku_id')
+        count = request.POST.get('count')
+
+        # 数据校验
+
+        # 校验数据完整性
+        if not all([sku_id, count]):
+            return JsonResponse({'res': 1, 'errmsg': '数据不完整'})
+
+        # 校验商品数量
+        try:
+            count = int(count)
+        except Exception as e:
+            return JsonResponse({'res': 2, 'errmsg': '商品数目出错'})
+
+        # 校验商品是否存在
+        try:
+            sku = GoodsSKU.objects.get(id=sku_id)
+        except GoodsSKU.DoesNotExist:
+            return JsonResponse({'res': 3, 'errmsg': '商品不存在'})
+
+        # 业务处理：更新购物车记录
+        con = get_redis_connection('default')
+        cart_key = 'cart_%d' % user.id
+
+        # 校验商品的库存
+        if count > sku.stock:
+            return JsonResponse({'res': 4, 'errmsg': '商品库存不足'})
+
+        # 设置redis-hash中对应的值
+        con.hset(cart_key, sku_id, count)
