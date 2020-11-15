@@ -22,8 +22,8 @@
 		<li class="col06">
 			<div class="num_add">
                 {% csrf_token %}
-				<a href="javascript:;" sku_id='{{ sku.id }}' class="add fl">+</a>
-				<input type="text" class="num_show fl" value="{{ sku.count }}">
+				<a href="javascript:;" class="add fl">+</a>
+				<input type="text" sku_id='{{ sku.id }}' class="num_show fl" value="{{ sku.count }}">
 				<a href="javascript:;" class="minus fl">-</a>
 			</div>
 		</li>
@@ -87,7 +87,7 @@
         // 商品的增加
         $('.add').click(function () {
             // 获取对应商品的sku_id、count
-            sku_id = $(this).attr('sku_id')
+            sku_id = $(this).next().attr('sku_id')
             count = $(this).next().val()
             count = parseInt(count) + 1
             csrf = $('input[name=csrfmiddlewaretoken]').val()
@@ -114,6 +114,57 @@
                 // 更新成功后
                 // 更新商品的数量
                 $(this).next().val(count)
+
+                // 更新商品的小计
+                price = $(this).parents('.cart_list_td').find('.col05').text()
+                amount = parseFloat(price) * count
+                $(this).parents('.cart_list_td').find('.col07').text(amount.toFixed(2)+'元')
+
+                // 如果当前商品被选中，则刷新商品总数目和合计
+                is_checked = $(this).parents('.cart_list_td').find(':checkbox').prop('checked')
+                if (is_checked){
+                    update_page_info()
+                }
+
+                // 更新上方 【全部商品】总件数
+                $('.total_count').find('em').text(total_count)
+            }
+        })
+
+        // 商品的减少
+        $('.minus').click(function () {
+            // 获取对应商品的sku_id、count
+            sku_id = $(this).prev().attr('sku_id')
+            count = $(this).prev().val()
+
+            if (parseInt(count) <=1 )
+                return
+
+            count = parseInt(count) - 1
+            csrf = $('input[name=csrfmiddlewaretoken]').val()
+
+            // 组织参数
+            params = {'sku_id': sku_id, 'count': count, 'csrfmiddlewaretoken': csrf}
+            error_update = false
+
+            // 设置Ajax请求为同步
+            $.ajaxSettings.async = false
+            $.post('/cart/update', params, function (data) {
+                if (data.res == 5){
+                    error_update = false  // 更新成功
+                    total_count = data.total_count
+                } else {
+                    error_update = true  // 更新失败
+                    alert(data.errmsg)
+                }
+            })
+            // 设置Ajax请求为异步
+            $.ajaxSettings.async = true  // 因为是全局，所以这里需要重新设置成异步
+
+            if (error_update == false){
+                // 更新成功后
+                // 更新商品的数量
+                $(this).prev().val(count)
 
                 // 更新商品的小计
                 price = $(this).parents('.cart_list_td').find('.col05').text()
