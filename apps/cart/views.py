@@ -101,6 +101,7 @@ class CartInfoView(LoginRequiredMixin, View):
 
 
 # Ajax
+# /cart/update
 class CartUpdateView(View):
     """ 购物车记录更新 """
     def post(self, request):
@@ -139,5 +140,14 @@ class CartUpdateView(View):
         if count > sku.stock:
             return JsonResponse({'res': 4, 'errmsg': '商品库存不足'})
 
-        # 设置redis-hash中对应的值
+        # 更新redis-hash中对应的值
         con.hset(cart_key, sku_id, count)
+
+        # 获取总件数
+        total_count = 0
+        counts = con.hvals(cart_key)  # 获取所有的值(count)
+        for count in counts:
+            total_count += int(count)
+
+        # 返回应答
+        return JsonResponse({'res': 5, 'total_count': total_count, 'errmsg': '添加成功'})
