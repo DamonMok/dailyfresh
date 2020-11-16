@@ -1,8 +1,11 @@
+from datetime import datetime
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import View
+from django.http import JsonResponse
 from apps.goods.models import GoodsSKU
 from django_redis import get_redis_connection
 from apps.user.models import Address
+from apps.order.models import OrderInfo, OrderGoods
 
 
 # Create your views here.
@@ -44,6 +47,9 @@ class OrderPlaceView(View):
         # 收货地址
         addrs = Address.objects.filter(user=user)
 
+        # 订单的商品id
+        sku_ids = ','.join(sku_ids)
+
         # 组织参数
         context = {
             'addrs': addrs,
@@ -52,9 +58,110 @@ class OrderPlaceView(View):
             'total_price': total_price,
             'transition_price': transition_price,
             'final_price': final_price,
+            'sku_ids': sku_ids
         }
 
         return render(request, 'place_order.html', context)
+
+
+class OrderCommitView(View):
+    """ 订单创建 """
+    def post(self, request):
+        """ 订单创建 """
+        # 判断用户是否登录
+        user = request.user
+        if not user.is_authenticated:
+            # 用户未登录
+            return JsonResponse({'res': 0, 'errmsg': '请先登录'})
+
+        # 接收参数
+        addr_id = request.POST.get('addr_id')
+        pay_method = request.POST.get('pay_method')
+        sku_ids = request.POST.get('sku_ids')
+
+        # 参数校验
+        if not all([addr_id, pay_method, sku_ids]):
+            return JsonResponse({'res': 1, 'errmsg': '参数不完整'})
+
+        # 验证支付方式
+        if pay_method not in OrderInfo.PAY_METHODS.keys():
+            return JsonResponse({'res': 2, 'errmsg': '支付方式不合法'})
+
+        # 校验地址
+        try:
+            addr = Address.objects.get(id=addr_id)
+        except Address.DoesNotExist as e:
+            return JsonResponse({'res': 3, 'errmsg': '地址不存在'})
+
+        # ************** 向【订单信息表】df_order_info 插入一条数据 **************
+        # 组织参数
+        # 订单id：20201116163728+用户id
+        order_id = datetime.now().strftime('%Y%m%d%H%M%S') + str(user.id)
+
+        # 运费
+        transition_price = 10
+
+        # 总数目和总金额
+        total_count = 0
+        total_price = 0
+
+        # 插入数据库
+        order = OrderInfo.objects.create(order_id=order_id,
+                                         user=user,
+                                         addr=addr,
+                                         pay_method=pay_method,
+                                         total_count=total_count,
+                                         total_price=total_price,
+                                         transit_price=transition_price)
+
+        # ************** 向【订单商品表】df_order_goods 插入N条数据 **************
+        # 订单中有多少件商品，就插入多少条
+        sku_ids = sku_ids.split(',')
+        con = get_redis_connection('default')
+        cart_key = 'cart_%d' % user.id
+
+        for sku_id in sku_ids:
+            # 遍历订单中的商品，进行插入
+            # 获取商品信息
+            try:
+                sku = GoodsSKU.objects.get(id=sku_id)
+            except GoodsSKU.DoesNotExist as e:
+                return JsonResponse({'res': 4, 'errmsg': '商品不存在'})
+
+            # 获取商品的数量
+            count = con.hget(cart_key, sku_id)
+
+            # 插入数据库
+            OrderGoods.objects.create(order=order,
+                                      sku=sku,
+                                      count=count,
+                                      price=sku.price)
+
+            # 更新商品的库存和销量
+            sku.stock -= int(count)
+            sku.sales += int(count)
+            sku.save()
+
+            # 计算订单商品的总数量和总价格
+            amount = sku.price * int(count)
+            total_count += int(count)
+            total_price += amount
+
+        # ************** 更新 【订单信息表】的商品总数量和总金额 **************
+        order.total_price = total_price
+        order.total_count = total_count
+        order.save()
+
+        # ************** 清除购物车的记录 **************
+        # sku_ids = [2, 4, 5]
+        # hdel(name, *keys)  keys是一个位置参数，不能直接把数组传进去。
+        # 需要在前面加*号进行对数组拆包[2, 4, 5]--->2, 4, 5
+        con.hdel(cart_key, *sku_ids)
+
+        # 返回应答
+        return JsonResponse({'res': 5, 'message': '创建成功'})
+
+
 
 
 

@@ -199,7 +199,7 @@ class UserOrderView(LoginRequiredMixin, View):
 class UserAddressView(LoginRequiredMixin, View):
     """用户中心-地址页"""
     def get(self, request):
-        # 显示
+        """ 收货地址显示 """
         current_page = 'address'
 
         user = request.user
@@ -208,7 +208,9 @@ class UserAddressView(LoginRequiredMixin, View):
 
         return render(request, 'user_center_site.html', {'current_page': current_page, 'address': address})
 
+    # TODO 插入表情有问题
     def post(self, request):
+        """ 新增收货地址 """
         # 接收数据
         receiver = request.POST.get('receiver')
         addr = request.POST.get('addr')
