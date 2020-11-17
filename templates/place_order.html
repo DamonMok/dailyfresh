@@ -91,7 +91,7 @@
             pay_method = $('input[name="pay_style"]:checked').val()
             sku_ids = $(this).attr('sku_ids')
             csrf = $('input[name="csrfmiddlewaretoken"]').val()
-            //alert(addr_id+":"+pay_method+":"+sku_ids)
+            alert(addr_id+":"+pay_method+":"+sku_ids)
 
             // 组织参数
             params = {'addr_id': addr_id, 'pay_method': pay_method, 'sku_ids':sku_ids, 'csrfmiddlewaretoken': csrf}

@@ -2,6 +2,7 @@ from datetime import datetime
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import View
 from django.http import JsonResponse
+from django.db import transaction
 from apps.goods.models import GoodsSKU
 from django_redis import get_redis_connection
 from apps.user.models import Address
@@ -66,6 +67,7 @@ class OrderPlaceView(View):
 
 class OrderCommitView(View):
     """ 订单创建 """
+    @transaction.atomic
     def post(self, request):
         """ 订单创建 """
         # 判断用户是否登录
@@ -105,53 +107,64 @@ class OrderCommitView(View):
         total_count = 0
         total_price = 0
 
-        # 插入数据库
-        order = OrderInfo.objects.create(order_id=order_id,
-                                         user=user,
-                                         addr=addr,
-                                         pay_method=pay_method,
-                                         total_count=total_count,
-                                         total_price=total_price,
-                                         transit_price=transition_price)
-
-        # ************** 向【订单商品表】df_order_goods 插入N条数据 **************
-        # 订单中有多少件商品，就插入多少条
-        sku_ids = sku_ids.split(',')
-        con = get_redis_connection('default')
-        cart_key = 'cart_%d' % user.id
-
-        for sku_id in sku_ids:
-            # 遍历订单中的商品，进行插入
-            # 获取商品信息
-            try:
-                sku = GoodsSKU.objects.get(id=sku_id)
-            except GoodsSKU.DoesNotExist as e:
-                return JsonResponse({'res': 4, 'errmsg': '商品不存在'})
-
-            # 获取商品的数量
-            count = con.hget(cart_key, sku_id)
-
+        # 设置事务还原点
+        sid = transaction.savepoint()
+        try:
             # 插入数据库
-            OrderGoods.objects.create(order=order,
-                                      sku=sku,
-                                      count=count,
-                                      price=sku.price)
+            order = OrderInfo.objects.create(order_id=order_id,
+                                             user=user,
+                                             addr=addr,
+                                             pay_method=pay_method,
+                                             total_count=total_count,
+                                             total_price=total_price,
+                                             transit_price=transition_price)
 
-            # 更新商品的库存和销量
-            sku.stock -= int(count)
-            sku.sales += int(count)
-            sku.save()
+            # ************** 向【订单商品表】df_order_goods 插入N条数据 **************
+            # 订单中有多少件商品，就插入多少条
+            sku_ids = sku_ids.split(',')
+            con = get_redis_connection('default')
+            cart_key = 'cart_%d' % user.id
 
-            # 计算订单商品的总数量和总价格
-            amount = sku.price * int(count)
-            total_count += int(count)
-            total_price += amount
+            for sku_id in sku_ids:
+                # 遍历订单中的商品，进行插入
+                # 获取商品信息
+                try:
+                    sku = GoodsSKU.objects.get(id=sku_id)
+                except GoodsSKU.DoesNotExist as e:
+                    transaction.savepoint_rollback(sid)
+                    return JsonResponse({'res': 4, 'errmsg': '商品不存在'})
 
-        # ************** 更新 【订单信息表】的商品总数量和总金额 **************
-        order.total_price = total_price
-        order.total_count = total_count
-        order.save()
+                # 获取商品的数量
+                count = con.hget(cart_key, sku_id)
 
+                if int(count) > sku.stock:
+                    transaction.savepoint_rollback(sid)
+                    return JsonResponse({'res': 6, 'errmsg': '库存不足'})
+
+                # 插入数据库
+                OrderGoods.objects.create(order=order,
+                                          sku=sku,
+                                          count=count,
+                                          price=sku.price)
+
+                # 更新商品的库存和销量
+                sku.stock -= int(count)
+                sku.sales += int(count)
+                sku.save()
+
+                # 计算订单商品的总数量和总价格
+                amount = sku.price * int(count)
+                total_count += int(count)
+                total_price += amount
+
+            # ************** 更新 【订单信息表】的商品总数量和总金额 **************
+            order.total_price = total_price
+            order.total_count = total_count
+            order.save()
+        except Exception as e:
+            transaction.savepoint_rollback(sid)
+            return JsonResponse({'res': 7, 'errmsg': '下单失败'})
+        transaction.savepoint_commit(sid)
         # ************** 清除购物车的记录 **************
         # sku_ids = [2, 4, 5]
         # hdel(name, *keys)  keys是一个位置参数，不能直接把数组传进去。
