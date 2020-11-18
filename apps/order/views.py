@@ -65,7 +65,9 @@ class OrderPlaceView(View):
         return render(request, 'place_order.html', context)
 
 
-class OrderCommitView(View):
+# /order/commit
+# 通过悲观锁解决并发引起的资源竞争
+class OrderCommitView2(View):
     """ 订单创建 """
     @transaction.atomic
     def post(self, request):
@@ -129,10 +131,17 @@ class OrderCommitView(View):
                 # 遍历订单中的商品，进行插入
                 # 获取商品信息
                 try:
-                    sku = GoodsSKU.objects.get(id=sku_id)
+                    # 悲观锁，查询时加锁
+                    # 哪个用户先获得锁，谁就先执行；没获得锁的就等待
+                    sku = GoodsSKU.objects.select_for_update().get(id=sku_id)
+                    # sku = GoodsSKU.objects.get(id=sku_id)
                 except GoodsSKU.DoesNotExist as e:
                     transaction.savepoint_rollback(sid)
                     return JsonResponse({'res': 4, 'errmsg': '商品不存在'})
+
+                import time
+                print(user.username, sku.stock)
+                time.sleep(10)
 
                 # 获取商品的数量
                 count = con.hget(cart_key, sku_id)
@@ -141,21 +150,153 @@ class OrderCommitView(View):
                     transaction.savepoint_rollback(sid)
                     return JsonResponse({'res': 6, 'errmsg': '库存不足'})
 
+                # 更新商品的库存和销量
+                sku.stock -= int(count)
+                sku.sales += int(count)
+                sku.save()
+
                 # 插入数据库
                 OrderGoods.objects.create(order=order,
                                           sku=sku,
                                           count=count,
                                           price=sku.price)
 
-                # 更新商品的库存和销量
-                sku.stock -= int(count)
-                sku.sales += int(count)
-                sku.save()
-
                 # 计算订单商品的总数量和总价格
                 amount = sku.price * int(count)
                 total_count += int(count)
                 total_price += amount
+
+            # ************** 更新 【订单信息表】的商品总数量和总金额 **************
+            order.total_price = total_price
+            order.total_count = total_count
+            order.save()
+        except Exception as e:
+            transaction.savepoint_rollback(sid)
+            return JsonResponse({'res': 7, 'errmsg': '下单失败'})
+        transaction.savepoint_commit(sid)
+        # ************** 清除购物车的记录 **************
+        # sku_ids = [2, 4, 5]
+        # hdel(name, *keys)  keys是一个位置参数，不能直接把数组传进去。
+        # 需要在前面加*号进行对数组拆包[2, 4, 5]--->2, 4, 5
+        con.hdel(cart_key, *sku_ids)
+
+        # 返回应答
+        return JsonResponse({'res': 5, 'message': '创建成功'})
+
+# 通过乐观锁解决并发引起的资源竞争
+class OrderCommitView(View):
+    """ 订单创建 """
+    @transaction.atomic
+    def post(self, request):
+        """ 订单创建 """
+        # 判断用户是否登录
+        user = request.user
+        if not user.is_authenticated:
+            # 用户未登录
+            return JsonResponse({'res': 0, 'errmsg': '请先登录'})
+
+        # 接收参数
+        addr_id = request.POST.get('addr_id')
+        pay_method = request.POST.get('pay_method')
+        sku_ids = request.POST.get('sku_ids')
+
+        # 参数校验
+        if not all([addr_id, pay_method, sku_ids]):
+            return JsonResponse({'res': 1, 'errmsg': '参数不完整'})
+
+        # 验证支付方式
+        if pay_method not in OrderInfo.PAY_METHODS.keys():
+            return JsonResponse({'res': 2, 'errmsg': '支付方式不合法'})
+
+        # 校验地址
+        try:
+            addr = Address.objects.get(id=addr_id)
+        except Address.DoesNotExist as e:
+            return JsonResponse({'res': 3, 'errmsg': '地址不存在'})
+
+        # ************** 向【订单信息表】df_order_info 插入一条数据 **************
+        # 组织参数
+        # 订单id：20201116163728+用户id
+        order_id = datetime.now().strftime('%Y%m%d%H%M%S') + str(user.id)
+
+        # 运费
+        transition_price = 10
+
+        # 总数目和总金额
+        total_count = 0
+        total_price = 0
+
+        # 设置事务还原点
+        sid = transaction.savepoint()
+        try:
+            # 插入数据库
+            order = OrderInfo.objects.create(order_id=order_id,
+                                             user=user,
+                                             addr=addr,
+                                             pay_method=pay_method,
+                                             total_count=total_count,
+                                             total_price=total_price,
+                                             transit_price=transition_price)
+
+            # ************** 向【订单商品表】df_order_goods 插入N条数据 **************
+            # 订单中有多少件商品，就插入多少条
+            sku_ids = sku_ids.split(',')
+            con = get_redis_connection('default')
+            cart_key = 'cart_%d' % user.id
+
+            for sku_id in sku_ids:
+                # 遍历订单中的商品，进行插入
+
+                for i in range(3):
+                    # 循环3次，通过乐观锁解决资源竞争
+                    # 获取商品信息
+                    try:
+                        sku = GoodsSKU.objects.get(id=sku_id)
+                    except GoodsSKU.DoesNotExist as e:
+                        transaction.savepoint_rollback(sid)
+                        return JsonResponse({'res': 4, 'errmsg': '商品不存在'})
+
+                    # 获取商品的数量
+                    count = con.hget(cart_key, sku_id)
+
+                    if int(count) > sku.stock:
+                        transaction.savepoint_rollback(sid)
+                        return JsonResponse({'res': 6, 'errmsg': '库存不足'})
+
+                    # 更新商品的库存和销量
+                    # sku.stock -= int(count)
+                    # sku.sales += int(count)
+                    # sku.save()
+
+                    # 乐观锁:在更改的时候加锁
+                    # 更改前，通过判断【库存】是否和查询的时候一致，去执行后续的操作。
+                    # 如果一致，直接更改。
+                    # 如果不一致，则产生了资源竞争。重复3次下单操作，避免资源竞争。
+                    origin_stock = sku.stock  # 记录一开始查询的库存
+                    new_stock = sku.stock - int(count)  # 要更改的库存
+                    new_sales = sku.sales + int(count)  # 要更改的销量
+
+                    # res代表受影响的行数，>0代表成功
+                    res = GoodsSKU.objects.filter(id=sku_id, stock=origin_stock).update(stock=new_stock,
+                                                                                        sales=new_sales)
+                    if res == 0:
+                        if i == 2:
+                            transaction.savepoint_rollback(sid)  # 回滚
+                            return JsonResponse({'res': 8, 'errmsg': '下单失败'})
+                        continue
+
+                    # 插入数据库
+                    OrderGoods.objects.create(order=order,
+                                              sku=sku,
+                                              count=count,
+                                              price=sku.price)
+
+                    # 计算订单商品的总数量和总价格
+                    amount = sku.price * int(count)
+                    total_count += int(count)
+                    total_price += amount
+
+                    break
 
             # ************** 更新 【订单信息表】的商品总数量和总金额 **************
             order.total_price = total_price
