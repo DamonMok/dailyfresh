@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'y3!ggq+pak3$v#%5re-oa-5gd*tl-olabbd(w=nkqnp2$3alfw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -137,6 +137,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = '/var/www/dailyfresh/static'  # 指定收集静态资源的路径
 
 
 # 富文本编辑器配置
